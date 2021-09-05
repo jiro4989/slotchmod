@@ -19,4 +19,6 @@ slotchmod [files...]
 [source,bash]
 ----
 go get github.com/jiro4989/slotchmod
+# or
+go install github.com/jiro4989/slotchmod@master
 ----

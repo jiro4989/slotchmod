@@ -22,3 +22,12 @@ go get github.com/jiro4989/slotchmod
 # or
 go install github.com/jiro4989/slotchmod@master
 ----
+
+== Key input
+
+[options="header"]
+|=================
+| Key | Description
+| Enter | Select slot
+| q, Ctrl-C, Ctrl-D | Quit
+|=================

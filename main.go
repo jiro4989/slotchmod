@@ -37,7 +37,15 @@ func main() {
 	interval, ok := slotIntervalTime[opts.Level]
 	if !ok {
 		fmt.Fprintln(os.Stderr, "[ERR] -level must be 'eash' or 'normal' or 'hard'.")
-		os.Exit(1)
+		os.Exit(2)
+	}
+
+	for _, file := range args {
+		_, err := os.Stat(file)
+		if os.IsNotExist(err) {
+			fmt.Fprintln(os.Stderr, fmt.Sprintf("[ERR] %s file doesn't exist.", file))
+			os.Exit(3)
+		}
 	}
 
 	slot := NewSlot(0, interval)

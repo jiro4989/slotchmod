@@ -23,6 +23,8 @@ go get github.com/jiro4989/slotchmod
 go install github.com/jiro4989/slotchmod@master
 ----
 
+or download executables from https://github.com/jiro4989/slotchmod/releases[GitHub Releases].
+
 == Key input
 
 [options="header"]

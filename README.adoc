@@ -1,0 +1,19 @@
+= slotchmod
+:sectnums:
+:toc: left
+
+image:./docs/demo.gif[]
+
+== usage
+
+[source,bash]
+----
+slotchmod [files...]
+----
+
+== installation
+
+[source,bash]
+----
+go get github.com/jiro4989/slotchmod
+----

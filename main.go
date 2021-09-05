@@ -10,18 +10,22 @@ import (
 	termbox "github.com/nsf/termbox-go"
 )
 
-func main() {
-	flag.Usage = func() {
-		cmd := os.Args[0]
-		fmt.Fprintln(os.Stderr, fmt.Sprintf("%s changes file permissions with a slot", cmd))
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "Usage:")
-		fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s [OPTIONS] [files...]", cmd))
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "Examples:")
-		fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s sample.txt", cmd))
-	}
+type CmdOpts struct {
+	Level string
+}
 
+var (
+	slotIntervalTime = map[string]int{
+		"easy":   200,
+		"normal": 100,
+		"hard":   50,
+	}
+)
+
+func main() {
+	opts := CmdOpts{}
+	flag.Usage = flagHelpMessage
+	flag.StringVar(&opts.Level, "level", "normal", "slot difficulty. [easy|normal|hard]")
 	flag.Parse()
 	args := flag.Args()
 
@@ -30,7 +34,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	slot := NewSlot(0)
+	interval, ok := slotIntervalTime[opts.Level]
+	if !ok {
+		fmt.Fprintln(os.Stderr, "[ERR] -level must be 'eash' or 'normal' or 'hard'.")
+		os.Exit(1)
+	}
+
+	slot := NewSlot(0, interval)
 
 	if err := termbox.Init(); err != nil {
 		panic(err)
@@ -46,11 +56,26 @@ func main() {
 	changeMode(slot, args)
 }
 
+func flagHelpMessage() {
+	cmd := os.Args[0]
+	fmt.Fprintln(os.Stderr, fmt.Sprintf("%s changes file permissions with a slot", cmd))
+	fmt.Fprintln(os.Stderr, "")
+	fmt.Fprintln(os.Stderr, "Usage:")
+	fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s [OPTIONS] [files...]", cmd))
+	fmt.Fprintln(os.Stderr, "")
+	fmt.Fprintln(os.Stderr, "Examples:")
+	fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s sample.txt", cmd))
+	fmt.Fprintln(os.Stderr, "")
+	fmt.Fprintln(os.Stderr, "Options:")
+
+	flag.PrintDefaults()
+}
+
 func clock(s *Slot) {
 	for !s.IsFinished() {
 		s.Switch()
 		drawSlot(s)
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(time.Duration(s.IntervalTime()) * time.Millisecond)
 	}
 }
 

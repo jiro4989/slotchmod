@@ -8,8 +8,8 @@ import (
 
 func TestSlotNewSlot(t *testing.T) {
 	assert := assert.New(t)
-	assert.NotNil(NewSlot(0))
-	assert.NotNil(NewSlot(1))
+	assert.NotNil(NewSlot(0, 100))
+	assert.NotNil(NewSlot(1, 100))
 }
 
 func TestSlotPreviousValue(t *testing.T) {

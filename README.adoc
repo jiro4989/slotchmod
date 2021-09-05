@@ -2,16 +2,19 @@
 :sectnums:
 :toc: left
 
+`slotchmod` changes file permission with a slot.
+This is a useful tool when you want to mess up file access permissions.
+
 image:./docs/demo.gif[]
 
-== usage
+== Usage
 
 [source,bash]
 ----
 slotchmod [files...]
 ----
 
-== installation
+== Installation
 
 [source,bash]
 ----

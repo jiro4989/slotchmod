@@ -16,9 +16,10 @@ type Slot struct {
 	slots            [3]int
 	currentSlotIndex int
 	isFinished       bool
+	intervalTime     int
 }
 
-func NewSlot(seed int64) *Slot {
+func NewSlot(seed int64, interval int) *Slot {
 	if seed == 0 {
 		i, _ := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
 		seed = i.Int64()
@@ -30,6 +31,7 @@ func NewSlot(seed int64) *Slot {
 		slotValue := rand.Intn(slotMaxValue + 1)
 		s.slots[i] = slotValue
 	}
+	s.intervalTime = interval
 
 	return &s
 }
@@ -76,4 +78,8 @@ func (s *Slot) NextValue() int {
 		v = slotMinValue
 	}
 	return v
+}
+
+func (s *Slot) IntervalTime() int {
+	return s.intervalTime
 }

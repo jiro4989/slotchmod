@@ -31,3 +31,20 @@ go install github.com/jiro4989/slotchmod@master
 | Enter | Select slot
 | q, Ctrl-C, Ctrl-D | Quit
 |=================
+
+== Help
+
+[source,text]
+----
+slotchmod changes file permissions with a slot
+
+Usage:
+  slotchmod [OPTIONS] [files...]
+
+Examples:
+  slotchmod sample.txt
+
+Options:
+  -level string
+    slot difficulty. [easy|normal|hard] (default "normal")
+----

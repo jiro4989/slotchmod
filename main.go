@@ -44,7 +44,7 @@ func main() {
 func clock(s *Slot) {
 	for !s.IsFinished() {
 		s.Switch()
-		drawSlot(s)
+		DrawSlot(s)
 		time.Sleep(time.Duration(s.IntervalTime()) * time.Millisecond)
 	}
 }

@@ -6,7 +6,7 @@ import (
 	termbox "github.com/nsf/termbox-go"
 )
 
-func drawSlot(s *Slot) {
+func DrawSlot(s *Slot) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	idx := s.CurrentSlotIndex()

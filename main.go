@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"strconv"
@@ -9,10 +8,6 @@ import (
 
 	termbox "github.com/nsf/termbox-go"
 )
-
-type CmdOpts struct {
-	Level string
-}
 
 var (
 	slotIntervalTime = map[string]int{
@@ -23,31 +18,13 @@ var (
 )
 
 func main() {
-	opts := CmdOpts{}
-	flag.Usage = flagHelpMessage
-	flag.StringVar(&opts.Level, "level", "normal", "slot difficulty. [easy|normal|hard]")
-	flag.Parse()
-	args := flag.Args()
-
-	if len(args) < 1 {
-		fmt.Fprintln(os.Stderr, "[ERR] Must need files")
+	args, err := ParseArgs()
+	if err != nil {
+		Err(err)
 		os.Exit(1)
 	}
 
-	interval, ok := slotIntervalTime[opts.Level]
-	if !ok {
-		fmt.Fprintln(os.Stderr, "[ERR] -level must be 'eash' or 'normal' or 'hard'.")
-		os.Exit(2)
-	}
-
-	for _, file := range args {
-		_, err := os.Stat(file)
-		if os.IsNotExist(err) {
-			fmt.Fprintln(os.Stderr, fmt.Sprintf("[ERR] %s file doesn't exist.", file))
-			os.Exit(3)
-		}
-	}
-
+	interval := slotIntervalTime[args.Level]
 	slot := NewSlot(0, interval)
 
 	if err := termbox.Init(); err != nil {
@@ -61,22 +38,7 @@ func main() {
 	waitKeyInput(slot)
 	termbox.Close()
 
-	changeMode(slot, args)
-}
-
-func flagHelpMessage() {
-	cmd := os.Args[0]
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("%s changes file permissions with a slot", cmd))
-	fmt.Fprintln(os.Stderr, "")
-	fmt.Fprintln(os.Stderr, "Usage:")
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s [OPTIONS] [files...]", cmd))
-	fmt.Fprintln(os.Stderr, "")
-	fmt.Fprintln(os.Stderr, "Examples:")
-	fmt.Fprintln(os.Stderr, fmt.Sprintf("  %s sample.txt", cmd))
-	fmt.Fprintln(os.Stderr, "")
-	fmt.Fprintln(os.Stderr, "Options:")
-
-	flag.PrintDefaults()
+	changeMode(slot, args.Args)
 }
 
 func clock(s *Slot) {

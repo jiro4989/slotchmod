@@ -8,14 +8,23 @@ import (
 
 type CmdArgs struct {
 	Level string
+	Style string
 	Args  []string
 }
+
+var (
+	styles = map[string]bool{
+		"simple": true,
+		"big":    true,
+	}
+)
 
 func ParseArgs() (*CmdArgs, error) {
 	opts := CmdArgs{}
 
 	flag.Usage = flagHelpMessage
 	flag.StringVar(&opts.Level, "level", "normal", "slot difficulty. [easy|normal|hard]")
+	flag.StringVar(&opts.Style, "style", "simple", "style. [simple|big]")
 	flag.Parse()
 	opts.Args = flag.Args()
 
@@ -46,9 +55,12 @@ func (c *CmdArgs) Validate() error {
 		return fmt.Errorf("Must need files")
 	}
 
-	_, ok := slotIntervalTime[c.Level]
-	if !ok {
+	if _, ok := slotIntervalTime[c.Level]; !ok {
 		return fmt.Errorf("-level must be 'eash' or 'normal' or 'hard'.")
+	}
+
+	if _, ok := styles[c.Style]; !ok {
+		return fmt.Errorf("-style must be 'simple' or 'big'.")
 	}
 
 	for _, file := range c.Args {

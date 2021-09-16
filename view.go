@@ -6,6 +6,13 @@ import (
 	termbox "github.com/nsf/termbox-go"
 )
 
+type DrawStyle int
+
+const (
+	DrawStyleSimple DrawStyle = iota
+	DrawStyleBig
+)
+
 var (
 	bigNumbers = [][]string{
 		{
@@ -83,7 +90,7 @@ var (
 	}
 )
 
-func DrawSlot(s *Slot) {
+func DrawSlot(s *Slot, st DrawStyle) {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 	idx := s.CurrentSlotIndex()
@@ -91,6 +98,19 @@ func DrawSlot(s *Slot) {
 	nv := s.NextValue()
 	slots := s.Slots()
 
+	switch st {
+	case DrawStyleSimple:
+		drawSimple(slots, idx, pv, nv)
+	case DrawStyleBig:
+		// TODO
+	default:
+		drawSimple(slots, idx, pv, nv)
+	}
+
+	termbox.Flush()
+}
+
+func drawSimple(slots [3]int, idx, pv, nv int) {
 	p := [3]string{" ", " ", " "}
 	p[idx] = fmt.Sprintf("%d", pv)
 
@@ -108,6 +128,4 @@ func DrawSlot(s *Slot) {
 			termbox.SetChar(x, y, r)
 		}
 	}
-
-	termbox.Flush()
 }

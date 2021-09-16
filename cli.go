@@ -13,9 +13,9 @@ type CmdArgs struct {
 }
 
 var (
-	styles = map[string]bool{
-		"simple": true,
-		"big":    true,
+	styles = map[string]DrawStyle{
+		"simple": DrawStyleSimple,
+		"big":    DrawStyleBig,
 	}
 )
 

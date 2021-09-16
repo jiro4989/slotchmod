@@ -14,7 +14,23 @@ const (
 )
 
 var (
-	bigNumbers = [][]string{
+	emptyNumber = [6]string{
+		`         `,
+		`         `,
+		`         `,
+		`         `,
+		`         `,
+		`         `,
+	}
+	bigNumbers = [10][6]string{
+		{
+			`   ___   `,
+			`  / _ \  `,
+			` | | | | `,
+			` | |_| | `,
+			`  \___/  `,
+			`         `,
+		},
 		{
 			`    _    `,
 			`   / |   `,
@@ -102,7 +118,7 @@ func DrawSlot(s *Slot, st DrawStyle) {
 	case DrawStyleSimple:
 		drawSimple(slots, idx, pv, nv)
 	case DrawStyleBig:
-		// TODO
+		drawBig(slots, idx, pv, nv)
 	default:
 		drawSimple(slots, idx, pv, nv)
 	}
@@ -122,6 +138,41 @@ func drawSimple(slots [3]int, idx, pv, nv int) {
 		fmt.Sprintf("chmod %d %d %d", slots[0], slots[1], slots[2]),
 		fmt.Sprintf("      %s %s %s", n[0], n[1], n[2]),
 	}
+
+	for y, row := range rows {
+		for x, r := range row {
+			termbox.SetChar(x, y, r)
+		}
+	}
+}
+
+func drawBig(slots [3]int, idx, pv, nv int) {
+	p := [3][6]string{emptyNumber, emptyNumber, emptyNumber}
+	p[idx] = bigNumbers[pv]
+
+	s := [3][6]string{
+		bigNumbers[slots[0]],
+		bigNumbers[slots[1]],
+		bigNumbers[slots[2]],
+	}
+
+	n := [3][6]string{emptyNumber, emptyNumber, emptyNumber}
+	n[idx] = bigNumbers[nv]
+
+	genRow := func(arr [3][6]string) []string {
+		max := len(arr[0])
+		var result []string
+		for i := 0; i < max; i++ {
+			row := fmt.Sprintf("%s %s %s", arr[0][i], arr[1][i], arr[2][i])
+			result = append(result, row)
+		}
+		return result
+	}
+
+	var rows []string
+	rows = append(rows, genRow(p)...)
+	rows = append(rows, genRow(s)...)
+	rows = append(rows, genRow(n)...)
 
 	for y, row := range rows {
 		for x, r := range row {

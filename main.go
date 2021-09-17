@@ -25,6 +25,7 @@ func main() {
 	}
 
 	interval := slotIntervalTime[args.Level]
+	style := styles[args.Style]
 	slot := NewSlot(0, interval)
 
 	if err := termbox.Init(); err != nil {
@@ -34,17 +35,17 @@ func main() {
 	termbox.SetInputMode(termbox.InputEsc)
 	termbox.Flush()
 
-	go clock(slot)
+	go clock(slot, style)
 	waitKeyInput(slot)
 	termbox.Close()
 
 	changeMode(slot, args.Args)
 }
 
-func clock(s *Slot) {
+func clock(s *Slot, st DrawStyle) {
 	for !s.IsFinished() {
 		s.Switch()
-		DrawSlot(s)
+		DrawSlot(s, st)
 		time.Sleep(time.Duration(s.IntervalTime()) * time.Millisecond)
 	}
 }

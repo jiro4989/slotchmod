@@ -14,6 +14,22 @@ const (
 )
 
 var (
+	bigEmptyChmod = [6]string{
+		`                                  `,
+		`                                  `,
+		`                                  `,
+		`                                  `,
+		`                                  `,
+		`                                  `,
+	}
+	bigChmod = [6]string{
+		`      _                         _ `,
+		`  ___| |__  _ __ ___   ___   __| |`,
+		" / __| '_ \\| '_ ` _ \\ / _ \\ / _` |",
+		`| (__| | | | | | | | | (_) | (_| |`,
+		` \___|_| |_|_| |_| |_|\___/ \__,_|`,
+		`                                  `,
+	}
 	emptyNumber = [6]string{
 		`         `,
 		`         `,
@@ -159,20 +175,20 @@ func drawBig(slots [3]int, idx, pv, nv int) {
 	n := [3][6]string{emptyNumber, emptyNumber, emptyNumber}
 	n[idx] = bigNumbers[nv]
 
-	genRow := func(arr [3][6]string) []string {
+	genRow := func(arr [3][6]string, pre [6]string) []string {
 		max := len(arr[0])
 		var result []string
 		for i := 0; i < max; i++ {
-			row := fmt.Sprintf("%s %s %s", arr[0][i], arr[1][i], arr[2][i])
+			row := fmt.Sprintf("%s %s %s %s", pre[i], arr[0][i], arr[1][i], arr[2][i])
 			result = append(result, row)
 		}
 		return result
 	}
 
 	var rows []string
-	rows = append(rows, genRow(p)...)
-	rows = append(rows, genRow(s)...)
-	rows = append(rows, genRow(n)...)
+	rows = append(rows, genRow(p, bigEmptyChmod)...)
+	rows = append(rows, genRow(s, bigChmod)...)
+	rows = append(rows, genRow(n, bigEmptyChmod)...)
 
 	for y, row := range rows {
 		for x, r := range row {

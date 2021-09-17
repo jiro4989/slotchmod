@@ -16,6 +16,7 @@ func TestCmdArgsValidate(t *testing.T) {
 			desc: "ok",
 			args: CmdArgs{
 				Level: "normal",
+				Style: "simple",
 				Args:  []string{"LICENSE"},
 			},
 			wantErr: false,
@@ -24,6 +25,16 @@ func TestCmdArgsValidate(t *testing.T) {
 			desc: "ok: level is hard",
 			args: CmdArgs{
 				Level: "hard",
+				Style: "simple",
+				Args:  []string{"LICENSE"},
+			},
+			wantErr: false,
+		},
+		{
+			desc: "ok: style is big",
+			args: CmdArgs{
+				Level: "normal",
+				Style: "big",
 				Args:  []string{"LICENSE"},
 			},
 			wantErr: false,
@@ -32,6 +43,7 @@ func TestCmdArgsValidate(t *testing.T) {
 			desc: "ng: arguments count is 0",
 			args: CmdArgs{
 				Level: "normal",
+				Style: "simple",
 				Args:  []string{},
 			},
 			wantErr: true,
@@ -40,6 +52,7 @@ func TestCmdArgsValidate(t *testing.T) {
 			desc: "ng: illegal level string",
 			args: CmdArgs{
 				Level: "aiueo",
+				Style: "simple",
 				Args:  []string{"LICENSE"},
 			},
 			wantErr: true,
@@ -48,6 +61,7 @@ func TestCmdArgsValidate(t *testing.T) {
 			desc: "ng: file doesn't exist",
 			args: CmdArgs{
 				Level: "aiueo",
+				Style: "simple",
 				Args:  []string{"LICENSE", "sushi.txt"},
 			},
 			wantErr: true,

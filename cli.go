@@ -68,6 +68,9 @@ func (c *CmdArgs) Validate() error {
 		if os.IsNotExist(err) {
 			return fmt.Errorf("%s file doesn't exist.", file)
 		}
+		if os.IsPermission(err) {
+			return fmt.Errorf("%s permission denied.", file)
+		}
 	}
 
 	return nil

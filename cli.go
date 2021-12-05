@@ -56,7 +56,7 @@ func (c *CmdArgs) Validate() error {
 	}
 
 	if _, ok := slotIntervalTime[c.Level]; !ok {
-		return fmt.Errorf("-level must be 'eash' or 'normal' or 'hard'.")
+		return fmt.Errorf("-level must be 'easy' or 'normal' or 'hard'.")
 	}
 
 	if _, ok := styles[c.Style]; !ok {

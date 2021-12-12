@@ -43,10 +43,12 @@ func main() {
 }
 
 func clock(s *Slot, st DrawStyle) {
+	sleepMilSec := time.Duration(s.IntervalTime()) * time.Millisecond
+
 	for !s.IsFinished() {
 		s.Switch()
 		DrawSlot(s, st)
-		time.Sleep(time.Duration(s.IntervalTime()) * time.Millisecond)
+		time.Sleep(sleepMilSec)
 	}
 }
 

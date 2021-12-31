@@ -6,9 +6,11 @@ on:
       - master
     paths:
       - '**.go'
+      - '.github/**'
   pull_request:
     paths:
       - '**.go'
+      - '.github/**'
 
 jobs:
   test:

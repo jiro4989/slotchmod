@@ -20,7 +20,7 @@ jobs:
         go: ['1.16', '1.17', '1.x']
     steps:
       - uses: actions/checkout@v2.4.0
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2.1.5
         with:
           go-version: ${{ matrix.go }}
       - run: go build

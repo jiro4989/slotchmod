@@ -7,7 +7,7 @@ on:
 
 env:
   app: slotchmod
-  goversion: '1.16'
+  goversion: '1.23'
   build_opts: '-ldflags="-s -w -extldflags \"-static\""'
 
 jobs:

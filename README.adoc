@@ -18,14 +18,23 @@ slotchmod [files...]
 
 == Installation
 
+=== With Go
+
 [source,bash]
 ----
-go get github.com/jiro4989/slotchmod
-# or
 go install github.com/jiro4989/slotchmod@master
 ----
 
-or download executables from https://github.com/jiro4989/slotchmod/releases[GitHub Releases].
+=== With Nix
+
+[source,bash]
+----
+nix profile add github:jiro4989/slotchmod
+----
+
+=== Manual
+
+Download executables from https://github.com/jiro4989/slotchmod/releases[GitHub Releases].
 
 == Key input
 

@@ -15,10 +15,10 @@
       in
       {
         packages.default = pkgs.buildGoModule {
-          pname = "textimg";
-          version = "3.2.0";
+          pname = "slotchmod";
+          version = "1.1.2";
           src = ./.;
-          vendorHash = "sha256-esTGTsar8qahGw625WjTjlFoVmeEL/72yLiHYvhOQi8=";
+          vendorHash = "sha256-TP75WnspFTzcRrq8eUpbQGi5F/pIeYoCDMon13YmrJ8=";
         };
 
         devShells.default = pkgs.mkShell {
